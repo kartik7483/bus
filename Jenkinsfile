@@ -11,5 +11,12 @@ pipeline {
                 sh 'docker build -t devops-web-app:latest .'
             }
         }
+        stage('Deploy Container') {
+            steps {
+                sh 'docker stop devops-web-app || true'
+                sh 'docker rm devops-web-app || true'
+                sh 'docker run -d --name devops-web-app -p 80:3000 devops-web-app:latest'
+            }
+        }
     }
 }
